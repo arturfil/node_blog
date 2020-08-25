@@ -22,3 +22,12 @@ exports.createProject = (req, res) => {
     res.json({data});
   })
 }
+
+exports.getProjectById = async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id);
+    return res.json(project);
+  } catch (error) {
+    return res.status(422).send(error.message);
+  }
+}
