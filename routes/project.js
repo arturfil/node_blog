@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const { getProjects, createProject, getProjectById } = require('../controllers/projectController');
+const { getProjects, createProject, getProjectById, deleteProject } = require('../controllers/projectController');
+
+const { checkJwt } = require('../controllers/authController');
 
 router.get('/', getProjects);
 router.get('/:id', getProjectById);
-router.post('/create', createProject);
+router.post('/', createProject);
+router.delete('/:id', deleteProject);
 
 module.exports = router;
