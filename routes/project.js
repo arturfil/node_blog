@@ -6,7 +6,7 @@ const { checkJwt } = require('../controllers/authController');
 
 router.get('/', getProjects);
 router.get('/:id', getProjectById);
-router.post('/', createProject);
+router.post('/', checkJwt, createProject);
 router.delete('/:id', deleteProject);
 
 module.exports = router;
