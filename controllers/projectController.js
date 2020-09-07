@@ -1,4 +1,5 @@
 const Project = require('../models/Project');
+const { update } = require('../models/Project');
 
 exports.getProjects = (req, res) => {
   Project.find().exec((err, data) => {
@@ -13,8 +14,9 @@ exports.getProjects = (req, res) => {
 
 exports.createProject = async (req, res) => {
   console.log("req.body -> ", req.body);
-  const project = new Project(req.body)
-  project.userId = 'jsaadfjklasdfljjlaskdjfalskdfjasdf'; // this will be later req.params.id
+  const project = new Project(req.body);
+  const userId = req.user.sub;
+  project.userId = userId; // this will be later req.params.id
   
   try {
     const newProject = await project.save();
@@ -28,6 +30,17 @@ exports.getProjectById = async (req, res) => {
   try {
     const project = await Project.findById(req.params.id);
     return res.json(project);
+  } catch (error) {
+    return res.status(422).send(error.message);
+  }
+}
+
+exports.udpateProject = async (req, res) => {
+  const {body, params: {id}} = req;
+
+  try {
+    const udpatedProject = await Project.findOneAndUpdate({_id: id}, body, {new: true, runValidators: true});
+    return res.json(udpatedProject);
   } catch (error) {
     return res.status(422).send(error.message);
   }
