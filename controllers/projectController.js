@@ -47,14 +47,6 @@ exports.udpateProject = async (req, res) => {
 }
 
 exports.deleteProject = async (req, res) => {
-  const project = await Project.findById(req.params.id);
-  try {
-    project.remove((err, deleted) => {
-      if (err) return res.json({error: "project was NOT deleted"});
-      else
-        return res.json({message: "Project was successfully deleted!"})
-    })
-  } catch (error) {
-    res.status(422).send(error.message)
-  }
+  const project = await Project.findOneAndRemove({_id: req.params.id})
+  return res.json({_id: project.id})
 }

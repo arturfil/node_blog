@@ -9,6 +9,6 @@ router.get('/:id', getProjectById);
 router.post('/', checkJwt, createProject);
 // create middleware to check for admin rights
 router.patch('/:id', checkJwt, udpateProject)
-router.delete('/:id', deleteProject);
+router.delete('/:id', checkJwt, deleteProject);
 
 module.exports = router;
