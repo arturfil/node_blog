@@ -15,3 +15,12 @@ exports.checkJwt = jwt({
   issuer: 'https://arturofilio.us.auth0.com/',
   algorithms: ['RS256']
 })
+
+exports.checkRole = role => (req, res, next) => {
+  const user = req.user;
+  if (user && user[process.env.AUTH0_NAMESPACE + '/roles'].includes(role)) {
+    next();
+  } else {
+    return res.status(401).send("You are not authorized to access this resource");
+  }
+}
