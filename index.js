@@ -20,6 +20,7 @@ server.use(bodyParser.json());
 // const projectRoutes = require('./routes/project');
 const projectRoutes = require('./routes/project');
 server.use('/api/v1/projects', projectRoutes);
+server.use('/api/v1/users', require('./routes/auth'));
 
 const port = process.env.PORT;
 
